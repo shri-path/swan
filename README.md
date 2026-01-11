@@ -13,6 +13,26 @@ Transform your Swagger UI experience with professional-grade navigation tools. P
 
 ---
 
+## Screenshots
+
+<details>
+<summary>View Screenshots</summary>
+
+### Main Navigation
+![Main View](https://raw.githubusercontent.com/shri-path/swan/refs/heads/main/demo-screens/swagger-navigator-expanded-tag.png)
+
+### Search in Action
+![Search Feature](https://raw.githubusercontent.com/shri-path/swan/refs/heads/main/demo-screens/swagger-navigator-search.png)
+
+### Starred Routes
+![Starred Routes](https://raw.githubusercontent.com/shri-path/swan/refs/heads/main/demo-screens/swagger-navigator-starred-routes.png)
+
+### Minimized
+![Highlight Animation](https://raw.githubusercontent.com/shri-path/swan/refs/heads/main/demo-screens/swagger-navigator-minimized.png)
+
+</details>
+
+---
 ## Features
 
 ### Core Features
@@ -34,27 +54,6 @@ Transform your Swagger UI experience with professional-grade navigation tools. P
 - Collapsible sidebar, minimze it for more screen space
 - Responsive design, works on all screen sizes
 - Accessibility-friendly, keyboard navigation
-
----
-
-## Screenshots
-
-<details>
-<summary>View Screenshots</summary>
-
-### Main Navigation
-![Main View](https://via.placeholder.com/800x500/1a1a2e/20d9d2?text=Main+Navigation+View)
-
-### Search in Action
-![Search Feature](https://via.placeholder.com/800x500/1a1a2e/20d9d2?text=Real-time+Search)
-
-### Starred Routes
-![Starred Routes](https://via.placeholder.com/800x500/1a1a2e/20d9d2?text=Starred+Routes+Section)
-
-### Route Highlighting
-![Highlight Animation](https://via.placeholder.com/800x500/1a1a2e/20d9d2?text=Teal+Highlight+Effect)
-
-</details>
 
 ---
 
