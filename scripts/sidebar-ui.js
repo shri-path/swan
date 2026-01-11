@@ -54,22 +54,14 @@ const SidebarUI = (() => {
     sidebar.innerHTML = `
       <div class="sidebar-header">
         <div class="sidebar-title">
-          <svg class="sidebar-logo" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="swanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff6b8a;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#e94560;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="48" height="48" rx="10" fill="url(#swanGradient)"/>
-            <text x="24" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">swan</text>
+          <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="48" height="48" rx="8" fill="#e94560"/>
+            <text x="24" y="24" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle" dominant-baseline="middle">swan</text>
           </svg>
-          <span>Swagger Navigator</span>
+          <span><span style="color:#e94560">Swa</span>gger <span style="color:#e94560">N</span>avigator
         </div>
         <button class="sidebar-toggle" title="Close Navigator">
-          <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right-close-icon lucide-panel-right-close"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/><path d="m8 9 3 3-3 3"/></svg>
         </button>
       </div>
 
@@ -99,9 +91,7 @@ const SidebarUI = (() => {
       </div>
 
       <button class="sidebar-expand-fab" title="Open Swagger Navigator">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right-icon lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
       </button>
     `;
 
