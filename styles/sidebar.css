@@ -123,11 +123,7 @@
 .sidebar-logo {
   flex-shrink: 0;
   border-radius: 4px;
-}
-
-.sidebar-title svg {
-  color: var(--nav-highlight);
-  flex-shrink: 0;
+  display: block;
 }
 
 .sidebar-title span {
@@ -280,6 +276,22 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.tag-description {
+  padding: 12px;
+  background: rgba(15, 52, 96, 0.3);
+  border-left: 3px solid var(--nav-highlight-teal);
+  margin: 8px 0;
+  border-radius: 4px;
+}
+
+.tag-description p {
+  margin: 0;
+  color: var(--nav-text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  font-style: italic;
 }
 
 .tag-header {
@@ -507,39 +519,37 @@
 
 /* Star icon in Swagger UI main content */
 .swagger-nav-star {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(26, 26, 46, 0.8);
-  border: 1px solid rgba(234, 234, 234, 0.2);
-  color: #a8a8b3;
+  background: transparent;
+  border: none;
+  color: rgba(59, 65, 81, 0.5);
   cursor: pointer;
-  padding: 6px;
-  border-radius: 6px;
-  display: flex;
+  padding: 8px;
+  margin: 0 4px;
+  border-radius: 4px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  z-index: 10;
-  opacity: 0;
-}
-
-.opblock-summary:hover .swagger-nav-star {
-  opacity: 1;
-}
-
-.swagger-nav-star.starred {
-  opacity: 1;
-  color: #ffd700;
-  background: rgba(255, 215, 0, 0.1);
-  border-color: rgba(255, 215, 0, 0.3);
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .swagger-nav-star:hover {
-  background: rgba(233, 69, 96, 0.2);
-  border-color: #e94560;
-  transform: translateY(-50%) scale(1.1);
+  background: rgba(59, 65, 81, 0.08);
+  color: rgba(59, 65, 81, 0.8);
+}
+
+.swagger-nav-star.starred {
+  color: #ffa500;
+}
+
+.swagger-nav-star.starred:hover {
+  background: rgba(255, 165, 0, 0.1);
+  color: #ff8c00;
+}
+
+.swagger-nav-star svg {
+  display: block;
 }
 
 /* ==================== Empty States ==================== */

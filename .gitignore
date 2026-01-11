@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+*.zip
+
+# Build info
+BUILD_INFO.json
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Windows
+$RECYCLE.BIN/
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+.Trash-*

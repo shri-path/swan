@@ -127,9 +127,16 @@ const MutationHandler = (() => {
       // Find summary section to inject star
       const summary = opBlock.querySelector('.opblock-summary');
       if (summary) {
-        // Insert star button at the end of summary
-        summary.style.position = 'relative';
-        summary.appendChild(starButton);
+        // Find the expand/collapse button (SVG arrow)
+        const expandButton = summary.querySelector('.opblock-summary-control, svg[class*="arrow"]');
+        
+        if (expandButton) {
+          // Insert star button BEFORE the expand button
+          expandButton.parentNode.insertBefore(starButton, expandButton);
+        } else {
+          // Fallback: append to summary if expand button not found
+          summary.appendChild(starButton);
+        }
       }
     });
   };
@@ -149,10 +156,12 @@ const MutationHandler = (() => {
     button.dataset.path = path;
 
     button.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" 
+      <svg width="20" height="20" viewBox="0 0 24 24" 
            fill="${isStarred ? 'currentColor' : 'none'}" 
            stroke="currentColor" 
-           stroke-width="2">
+           stroke-width="2"
+           stroke-linecap="round"
+           stroke-linejoin="round">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
       </svg>
     `;

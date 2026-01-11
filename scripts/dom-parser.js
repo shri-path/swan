@@ -29,7 +29,7 @@ const DOMParser = (() => {
 
   /**
    * Extract all tags from Swagger UI
-   * @returns {Array<Object>} Array of tag objects with name and element
+   * @returns {Array<Object>} Array of tag objects with name, description, and element
    */
   const extractTags = () => {
     const tags = [];
@@ -39,11 +39,34 @@ const DOMParser = (() => {
       const tagHeader = tagElement.querySelector(SELECTORS.tagHeader);
       if (!tagHeader) return;
 
-      const tagName = tagHeader.textContent.trim();
+      // Extract tag name from the span inside the link
+      let tagName = '';
+      const tagSpan = tagHeader.querySelector('span');
+      if (tagSpan) {
+        tagName = tagSpan.textContent.trim();
+      } else {
+        // Fallback to full text if span not found
+        tagName = tagHeader.textContent.trim();
+      }
+
+      // Extract description from <small> tag
+      let tagDescription = '';
+      const smallElement = tagHeader.querySelector('small .renderedMarkdown, small');
+      if (smallElement) {
+        // Get text content without HTML tags
+        const descDiv = smallElement.querySelector('.renderedMarkdown');
+        if (descDiv) {
+          tagDescription = descDiv.textContent.trim();
+        } else {
+          tagDescription = smallElement.textContent.trim();
+        }
+      }
+
       const tagId = tagElement.id || `tag-${tagName.toLowerCase().replace(/\s+/g, '-')}`;
 
       tags.push({
         name: tagName,
+        description: tagDescription,
         id: tagId,
         element: tagElement,
         operations: []
@@ -122,6 +145,7 @@ const DOMParser = (() => {
         allOperations.push({
           ...op,
           tagName: tag.name,
+          tagDescription: tag.description,
           tagId: tag.id
         });
       });

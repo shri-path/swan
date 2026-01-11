@@ -7,13 +7,13 @@ const SidebarUI = (() => {
   let sidebarElement = null;
   let isCollapsed = false;
   let activeTagId = null;
-  let searchTerm = "";
+  let searchTerm = '';
   let allOperations = [];
   let starredRouteKeys = new Set();
 
-  const SIDEBAR_ID = "swagger-nav-sidebar";
-  const SIDEBAR_WIDTH = "320px";
-  const SIDEBAR_COLLAPSED_WIDTH = "48px";
+  const SIDEBAR_ID = 'swagger-nav-sidebar';
+  const SIDEBAR_WIDTH = '320px';
+  const SIDEBAR_COLLAPSED_WIDTH = '48px';
 
   /**
    * Initialize sidebar
@@ -26,7 +26,7 @@ const SidebarUI = (() => {
 
     // Create sidebar DOM
     createSidebar();
-
+    
     // Load operations
     await refreshOperations();
 
@@ -47,21 +47,29 @@ const SidebarUI = (() => {
       return;
     }
 
-    const sidebar = document.createElement("div");
+    const sidebar = document.createElement('div');
     sidebar.id = SIDEBAR_ID;
-    sidebar.className = "swagger-nav-sidebar";
+    sidebar.className = 'swagger-nav-sidebar';
 
     sidebar.innerHTML = `
       <div class="sidebar-header">
         <div class="sidebar-title">
-          <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0" y="0" width="48" height="48" rx="8" fill="#e94560"/>
-            <text x="24" y="24" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle" dominant-baseline="middle">swan</text>
+          <svg class="sidebar-logo" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="swanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ff6b8a;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#e94560;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="10" fill="url(#swanGradient)"/>
+            <text x="24" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">swan</text>
           </svg>
-          <span><span style="color:#e94560">Swa</span>gger <span style="color:#e94560">N</span>avigator
+          <span>Swagger Navigator</span>
         </div>
         <button class="sidebar-toggle" title="Close Navigator">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right-close-icon lucide-panel-right-close"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/><path d="m8 9 3 3-3 3"/></svg>
+          <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
       </div>
 
@@ -91,9 +99,10 @@ const SidebarUI = (() => {
       </div>
 
       <button class="sidebar-expand-fab" title="Open Swagger Navigator">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right-icon lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
       </button>
-      
     `;
 
     document.body.appendChild(sidebar);
@@ -108,20 +117,20 @@ const SidebarUI = (() => {
    */
   const attachEventListeners = () => {
     // Toggle button in header
-    const toggleBtn = sidebarElement.querySelector(".sidebar-toggle");
-    toggleBtn.addEventListener("click", toggleCollapse);
+    const toggleBtn = sidebarElement.querySelector('.sidebar-toggle');
+    toggleBtn.addEventListener('click', toggleCollapse);
 
     // FAB expand button (visible when collapsed)
-    const fabBtn = sidebarElement.querySelector(".sidebar-expand-fab");
-    fabBtn.addEventListener("click", toggleCollapse);
+    const fabBtn = sidebarElement.querySelector('.sidebar-expand-fab');
+    fabBtn.addEventListener('click', toggleCollapse);
 
     // Search input
-    const searchInput = sidebarElement.querySelector(".search-input");
-    searchInput.addEventListener("input", handleSearch);
+    const searchInput = sidebarElement.querySelector('.search-input');
+    searchInput.addEventListener('input', handleSearch);
 
     // Clear search button
-    const clearBtn = sidebarElement.querySelector(".search-clear");
-    clearBtn.addEventListener("click", clearSearch);
+    const clearBtn = sidebarElement.querySelector('.search-clear');
+    clearBtn.addEventListener('click', clearSearch);
   };
 
   /**
@@ -129,12 +138,12 @@ const SidebarUI = (() => {
    */
   const toggleCollapse = () => {
     isCollapsed = !isCollapsed;
-    sidebarElement.classList.toggle("collapsed", isCollapsed);
-
+    sidebarElement.classList.toggle('collapsed', isCollapsed);
+    
     // Update icon rotation
-    const icon = sidebarElement.querySelector(".icon-collapse");
+    const icon = sidebarElement.querySelector('.icon-collapse');
     if (icon) {
-      icon.style.transform = isCollapsed ? "rotate(180deg)" : "rotate(0deg)";
+      icon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
     }
   };
 
@@ -150,9 +159,9 @@ const SidebarUI = (() => {
    * Clear search input
    */
   const clearSearch = () => {
-    const searchInput = sidebarElement.querySelector(".search-input");
-    searchInput.value = "";
-    searchTerm = "";
+    const searchInput = sidebarElement.querySelector('.search-input');
+    searchInput.value = '';
+    searchTerm = '';
     renderOperations();
   };
 
@@ -160,11 +169,11 @@ const SidebarUI = (() => {
    * Setup keyboard shortcuts
    */
   const setupKeyboardShortcuts = () => {
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener('keydown', (e) => {
       // Cmd/Ctrl + Shift + K to focus search
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "K") {
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'K') {
         e.preventDefault();
-        const searchInput = sidebarElement.querySelector(".search-input");
+        const searchInput = sidebarElement.querySelector('.search-input');
         searchInput.focus();
         searchInput.select();
       }
@@ -177,15 +186,15 @@ const SidebarUI = (() => {
   const setupIntersectionObserver = () => {
     const options = {
       root: null,
-      rootMargin: "-50px 0px -80% 0px",
-      threshold: 0,
+      rootMargin: '-50px 0px -80% 0px',
+      threshold: 0
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           // Find tag for this operation
-          const tagSection = entry.target.closest(".opblock-tag-section");
+          const tagSection = entry.target.closest('.opblock-tag-section');
           if (tagSection) {
             updateActiveTag(tagSection.id);
           }
@@ -194,7 +203,7 @@ const SidebarUI = (() => {
     }, options);
 
     // Observe all operations
-    document.querySelectorAll(".opblock").forEach((op) => {
+    document.querySelectorAll('.opblock').forEach((op) => {
       observer.observe(op);
     });
 
@@ -207,13 +216,13 @@ const SidebarUI = (() => {
    */
   const updateActiveTag = (tagId) => {
     if (activeTagId === tagId) return;
-
+    
     activeTagId = tagId;
 
     // Update UI
-    const allTagHeaders = sidebarElement.querySelectorAll(".tag-header");
+    const allTagHeaders = sidebarElement.querySelectorAll('.tag-header');
     allTagHeaders.forEach((header) => {
-      header.classList.toggle("active", header.dataset.tagId === tagId);
+      header.classList.toggle('active', header.dataset.tagId === tagId);
     });
   };
 
@@ -230,8 +239,8 @@ const SidebarUI = (() => {
    * Render operations in sidebar
    */
   const renderOperations = () => {
-    const listContainer = sidebarElement.querySelector("#swagger-nav-list");
-
+    const listContainer = sidebarElement.querySelector('#swagger-nav-list');
+    
     // Filter operations by search term
     const filteredOps = filterOperations(allOperations, searchTerm);
 
@@ -240,14 +249,11 @@ const SidebarUI = (() => {
 
     // Separate starred routes
     const starredOps = filteredOps.filter((op) => {
-      const routeKey = window.StorageManager.generateRouteKey(
-        op.method,
-        op.path
-      );
+      const routeKey = window.StorageManager.generateRouteKey(op.method, op.path);
       return starredRouteKeys.has(routeKey);
     });
 
-    let html = "";
+    let html = '';
 
     // Render starred routes section
     if (starredOps.length > 0) {
@@ -256,10 +262,11 @@ const SidebarUI = (() => {
 
     // Render tags with operations
     Object.keys(groupedByTag).forEach((tagName) => {
-      html += renderTag(tagName, groupedByTag[tagName]);
+      const tagData = groupedByTag[tagName];
+      html += renderTag(tagName, tagData.operations, tagData.description);
     });
 
-    if (html === "") {
+    if (html === '') {
       html = '<div class="empty-state">No routes found</div>';
     }
 
@@ -294,11 +301,14 @@ const SidebarUI = (() => {
     const grouped = {};
 
     operations.forEach((op) => {
-      const tag = op.tagName || "Untagged";
+      const tag = op.tagName || 'Untagged';
       if (!grouped[tag]) {
-        grouped[tag] = [];
+        grouped[tag] = {
+          operations: [],
+          description: op.tagDescription || ''
+        };
       }
-      grouped[tag].push(op);
+      grouped[tag].operations.push(op);
     });
 
     return grouped;
@@ -308,9 +318,7 @@ const SidebarUI = (() => {
    * Render starred routes section
    */
   const renderStarredSection = (starredOps) => {
-    const operations = starredOps
-      .map((op) => renderOperation(op, true))
-      .join("");
+    const operations = starredOps.map((op) => renderOperation(op, true)).join('');
 
     return `
       <div class="tag-section starred-section">
@@ -334,11 +342,16 @@ const SidebarUI = (() => {
   /**
    * Render a tag section with operations
    */
-  const renderTag = (tagName, operations) => {
-    const tagId = `tag-${tagName.toLowerCase().replace(/\s+/g, "-")}`;
-    const operationsHtml = operations
-      .map((op) => renderOperation(op, false))
-      .join("");
+  const renderTag = (tagName, operations, tagDescription = '') => {
+    const tagId = `tag-${tagName.toLowerCase().replace(/\s+/g, '-')}`;
+    const operationsHtml = operations.map((op) => renderOperation(op, false)).join('');
+    
+    // Include description if available
+    const descriptionHtml = tagDescription ? `
+      <div class="tag-description">
+        <p>${tagDescription}</p>
+      </div>
+    ` : '';
 
     return `
       <div class="tag-section collapsed">
@@ -354,6 +367,7 @@ const SidebarUI = (() => {
           </svg>
         </div>
         <div class="tag-operations">
+          ${descriptionHtml}
           ${operationsHtml}
         </div>
       </div>
@@ -367,7 +381,7 @@ const SidebarUI = (() => {
     const routeKey = window.StorageManager.generateRouteKey(op.method, op.path);
     const isStarred = starredRouteKeys.has(routeKey);
     const methodClass = window.DOMParser.getMethodColor(op.method);
-    const deprecatedClass = op.isDeprecated ? "deprecated" : "";
+    const deprecatedClass = op.isDeprecated ? 'deprecated' : '';
 
     return `
       <div class="operation-item ${deprecatedClass}" 
@@ -377,16 +391,12 @@ const SidebarUI = (() => {
           <span class="operation-method ${methodClass}">${op.method}</span>
           <span class="operation-path" title="${op.path}">${op.path}</span>
         </div>
-        ${
-          op.summary ? `<div class="operation-summary">${op.summary}</div>` : ""
-        }
-        <button class="star-button ${isStarred ? "starred" : ""}" 
+        ${op.summary ? `<div class="operation-summary">${op.summary}</div>` : ''}
+        <button class="star-button ${isStarred ? 'starred' : ''}" 
                 data-method="${op.method}" 
                 data-path="${op.path}"
-                title="${isStarred ? "Unstar route" : "Star route"}">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="${
-            isStarred ? "currentColor" : "none"
-          }" stroke="currentColor" stroke-width="2">
+                title="${isStarred ? 'Unstar route' : 'Star route'}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="${isStarred ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
         </button>
@@ -399,18 +409,18 @@ const SidebarUI = (() => {
    */
   const attachOperationListeners = () => {
     // Tag header click - toggle expand/collapse
-    sidebarElement.querySelectorAll(".tag-header").forEach((header) => {
-      header.addEventListener("click", (e) => {
-        const tagSection = e.currentTarget.closest(".tag-section");
-        tagSection.classList.toggle("collapsed");
+    sidebarElement.querySelectorAll('.tag-header').forEach((header) => {
+      header.addEventListener('click', (e) => {
+        const tagSection = e.currentTarget.closest('.tag-section');
+        tagSection.classList.toggle('collapsed');
       });
     });
 
     // Operation click - scroll to route
-    sidebarElement.querySelectorAll(".operation-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
+    sidebarElement.querySelectorAll('.operation-item').forEach((item) => {
+      item.addEventListener('click', (e) => {
         // Don't trigger if clicking star button
-        if (e.target.closest(".star-button")) return;
+        if (e.target.closest('.star-button')) return;
 
         const method = item.dataset.method;
         const path = item.dataset.path;
@@ -423,23 +433,20 @@ const SidebarUI = (() => {
     });
 
     // Star button click - toggle starred state
-    sidebarElement.querySelectorAll(".star-button").forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
+    sidebarElement.querySelectorAll('.star-button').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
 
         const method = btn.dataset.method;
         const path = btn.dataset.path;
 
         // Toggle in storage
-        const isNowStarred = await window.StorageManager.toggleStarred(
-          method,
-          path
-        );
+        const isNowStarred = await window.StorageManager.toggleStarred(method, path);
 
         // Update UI
-        btn.classList.toggle("starred", isNowStarred);
-        const svg = btn.querySelector("svg");
-        svg.setAttribute("fill", isNowStarred ? "currentColor" : "none");
+        btn.classList.toggle('starred', isNowStarred);
+        const svg = btn.querySelector('svg');
+        svg.setAttribute('fill', isNowStarred ? 'currentColor' : 'none');
 
         // Update star icons in Swagger UI
         updateStarInSwaggerUI(method, path, isNowStarred);
@@ -457,12 +464,12 @@ const SidebarUI = (() => {
     const opElement = window.DOMParser.findOperationElement(method, path);
     if (!opElement) return;
 
-    const starIcon = opElement.querySelector(".swagger-nav-star");
+    const starIcon = opElement.querySelector('.swagger-nav-star');
     if (starIcon) {
-      starIcon.classList.toggle("starred", isStarred);
-      const svg = starIcon.querySelector("svg");
+      starIcon.classList.toggle('starred', isStarred);
+      const svg = starIcon.querySelector('svg');
       if (svg) {
-        svg.setAttribute("fill", isStarred ? "currentColor" : "none");
+        svg.setAttribute('fill', isStarred ? 'currentColor' : 'none');
       }
     }
   };
@@ -485,7 +492,7 @@ const SidebarUI = (() => {
     init,
     destroy,
     refreshOperations,
-    updateActiveTag,
+    updateActiveTag
   };
 })();
 
